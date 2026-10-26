@@ -160,7 +160,12 @@ const homeModule = {
         const el = document.getElementById('home-quick-actions');
         if (!el) return;
         const actions = this.getQuickActions();
-        el.innerHTML = actions.map(a =>
+        el.innerHTML = `
+            <button class="home-quick-btn knowledge-home-entry" data-invictus-learning-entry="true" onclick="navigationManager.goTo('subjects')" title="Предмет → тема">
+                <span class="knowledge-home-entry-title">🩺 <b>Обучение</b></span>
+                <small>Предмет → тема</small>
+            </button>
+        ` + actions.map(a =>
             `<button class="home-quick-btn" onclick="navigationManager.goTo('${a.screen}')">${a.label}</button>`
         ).join('');
     },

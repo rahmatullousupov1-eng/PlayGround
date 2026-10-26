@@ -1,7 +1,7 @@
 // Navigation Manager
 const navigationManager = {
     currentScreen: 'home',
-    history: [],
+    history: ['home'],
     gestureState: {
         startX: 0,
         startY: 0,
@@ -16,6 +16,8 @@ const navigationManager = {
     goTo: function(screen, options = {}) {
         const targetScreen = screen || 'home';
         const skipHistory = Boolean(options.skipHistory);
+        const navToken = (this._navToken = (this._navToken || 0) + 1);
+        let resolvedScreen = targetScreen;
 
         try {
             this.hideAllScreens();
@@ -117,8 +119,8 @@ const navigationManager = {
                     customScreenManager.show(targetScreen);
                     break;
                 }
+                resolvedScreen = 'home';
                 homeModule.show();
-                this.currentScreen = 'home';
                 break;
         }
         } catch (error) {
@@ -130,12 +132,15 @@ const navigationManager = {
             if (typeof homeModule !== 'undefined' && typeof homeModule.show === 'function') {
                 homeModule.show();
             }
-            this.currentScreen = 'home';
+            resolvedScreen = 'home';
         }
 
-        this.currentScreen = this.currentScreen || targetScreen || 'home';
-        if (!skipHistory) {
-            this.history.push(this.currentScreen);
+        // Вложенный переход (например, progress → dashboard) уже обновил состояние.
+        if (navToken !== this._navToken) return;
+
+        this.currentScreen = resolvedScreen;
+        if (!skipHistory && this.history[this.history.length - 1] !== resolvedScreen) {
+            this.history.push(resolvedScreen);
         }
         this.updateBottomNav();
     },
