@@ -1,0 +1,144 @@
+/* Профиль: отдельная вкладка */
+.profile-head {
+    margin-bottom: 14px;
+}
+
+.profile-hero {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px 16px;
+    border-radius: 22px;
+    background: linear-gradient(135deg, rgba(0, 188, 212, 0.16), rgba(26, 35, 126, 0.55));
+    border: 1px solid rgba(126, 232, 255, 0.22);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
+    cursor: pointer;
+    position: relative;
+}
+
+.profile-avatar {
+    width: 64px;
+    height: 64px;
+    min-width: 64px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.1rem;
+    background: linear-gradient(135deg, #00bcd4, #1a237e);
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    box-shadow: 0 6px 18px rgba(0, 188, 212, 0.35);
+}
+
+.profile-hero-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.profile-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.profile-role-line {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.65);
+    margin-top: 3px;
+}
+
+.profile-dev-hint {
+    font-size: 1.2rem;
+    opacity: 0.5;
+}
+
+.profile-dev-caption {
+    font-size: 0.68rem;
+    color: rgba(255, 255, 255, 0.35);
+    margin: 8px 4px 0;
+}
+
+.profile-role-chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.profile-role-chip {
+    padding: 9px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: 600;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.profile-role-chip:hover {
+    border-color: rgba(0, 188, 212, 0.5);
+}
+
+.profile-role-chip.active {
+    background: rgba(0, 188, 212, 0.25);
+    border-color: rgba(0, 188, 212, 0.7);
+    color: #fff;
+}
+
+/* Telegram-меню (общие стили, как в settings) */
+.tg-section-title {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(178, 235, 242, 0.7);
+    margin: 18px 0 8px;
+}
+
+.tg-menu {
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.tg-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    transition: background 0.2s ease;
+}
+
+.tg-item:last-child {
+    border-bottom: none;
+}
+
+.tg-item:hover {
+    background: rgba(0, 188, 212, 0.1);
+}
+
+.tg-icon {
+    font-size: 1.2rem;
+}
+
+.tg-label {
+    flex: 1;
+    color: #fff;
+    font-weight: 500;
+    font-size: 0.92rem;
+}
+
+.tg-arrow {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 1.2rem;
+}
+
+.tg-danger .tg-label {
+    color: #ff8a80;
+}

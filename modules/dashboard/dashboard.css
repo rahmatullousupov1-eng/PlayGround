@@ -1,0 +1,396 @@
+/* ============================================
+   Dashboard Screen Styles
+   ============================================ */
+
+#dashboard-screen {
+    display: none;
+    flex-direction: column;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 0;
+    overflow-y: auto;
+}
+
+#dashboard-screen.module-screen {
+    display: flex;
+}
+
+.dashboard-header {
+    background: linear-gradient(135deg, #1a237e, #311b92);
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.dashboard-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.dashboard-logout-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.dashboard-logout-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.dashboard-content {
+    flex: 1;
+    padding: 24px;
+    max-width: 1000px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Profile Card */
+.dashboard-profile-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    animation: slideInUp 0.4s ease;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #1a237e, #311b92);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.profile-info h3 {
+    margin: 0 0 8px 0;
+    color: #1a237e;
+    font-size: 1.3rem;
+}
+
+.profile-email,
+.profile-date {
+    margin: 4px 0;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 0.9rem;
+}
+
+.profile-stats {
+    display: flex;
+    gap: 32px;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #00bcd4;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: rgba(0, 0, 0, 0.6);
+    margin-top: 4px;
+}
+
+/* Dashboard Section */
+.dashboard-section {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    animation: slideInUp 0.5s ease;
+}
+
+.section-title {
+    margin: 0 0 16px 0;
+    font-size: 1.2rem;
+    color: #1a237e;
+    border-bottom: 2px solid rgba(26, 35, 126, 0.1);
+    padding-bottom: 12px;
+}
+
+/* Courses Progress */
+.courses-progress {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.course-progress-item {
+    background: rgba(0, 188, 212, 0.05);
+    border: 1px solid rgba(0, 188, 212, 0.2);
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: all 0.2s ease;
+}
+
+.course-progress-item:hover {
+    border-color: rgba(0, 188, 212, 0.5);
+    background: rgba(0, 188, 212, 0.1);
+    transform: translateX(4px);
+}
+
+.course-progress-item.completed {
+    background: rgba(76, 175, 80, 0.05);
+    border-color: rgba(76, 175, 80, 0.3);
+}
+
+.course-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 150px;
+}
+
+.course-icon {
+    font-size: 1.5rem;
+}
+
+.course-name {
+    font-weight: 600;
+    color: #1a237e;
+}
+
+.progress-bar-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 8px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00bcd4, #4dd0e1);
+    transition: width 0.4s ease;
+}
+
+.progress-percent {
+    font-weight: 600;
+    color: #00bcd4;
+    min-width: 40px;
+    text-align: right;
+}
+
+.topics-count {
+    font-size: 0.85rem;
+    color: rgba(0, 0, 0, 0.6);
+    min-width: 60px;
+    text-align: right;
+}
+
+/* Recent Topics */
+.recent-topics {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.recent-topic-item {
+    background: linear-gradient(135deg, rgba(0, 188, 212, 0.05), rgba(26, 35, 126, 0.05));
+    border: 1px solid rgba(0, 188, 212, 0.2);
+    border-radius: 8px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.recent-topic-item:hover {
+    border-color: rgba(0, 188, 212, 0.5);
+    background: linear-gradient(135deg, rgba(0, 188, 212, 0.1), rgba(26, 35, 126, 0.1));
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0, 188, 212, 0.15);
+}
+
+.topic-breadcrumb {
+    font-size: 0.85rem;
+    color: rgba(0, 0, 0, 0.6);
+    margin-bottom: 8px;
+}
+
+.topic-breadcrumb strong {
+    color: #1a237e;
+}
+
+.recent-topic-item h4 {
+    margin: 0 0 8px 0;
+    color: #1a237e;
+    font-size: 1rem;
+}
+
+.topic-preview {
+    margin: 0;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Achievements */
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 12px;
+}
+
+.achievement-badge {
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 152, 0, 0.1));
+    border: 2px solid rgba(255, 193, 7, 0.3);
+    border-radius: 8px;
+    padding: 16px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.achievement-badge:hover {
+    border-color: rgba(255, 193, 7, 0.6);
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.2), rgba(255, 152, 0, 0.2));
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(255, 193, 7, 0.2);
+}
+
+.achievement-icon {
+    font-size: 2rem;
+}
+
+.achievement-name {
+    font-weight: 600;
+    color: #1a237e;
+    font-size: 0.85rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .dashboard-content {
+        padding: 16px;
+        gap: 16px;
+    }
+    
+    .dashboard-profile-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .profile-stats {
+        justify-content: space-around;
+        width: 100%;
+    }
+    
+    .course-progress-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .progress-bar-container {
+        width: 100%;
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .progress-percent {
+        align-self: flex-start;
+    }
+    
+    .achievements-grid {
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    }
+    
+    .dashboard-header {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+    }
+    
+    .dashboard-header h2 {
+        font-size: 1.2rem;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-content {
+        padding: 12px;
+        gap: 12px;
+    }
+    
+    .dashboard-profile-card {
+        padding: 16px;
+    }
+    
+    .profile-avatar {
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
+    }
+    
+    .dashboard-section {
+        padding: 16px;
+    }
+    
+    .section-title {
+        font-size: 1rem;
+    }
+    
+    .stat-value {
+        font-size: 1.4rem;
+    }
+}

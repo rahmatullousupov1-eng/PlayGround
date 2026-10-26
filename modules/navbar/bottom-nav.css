@@ -1,0 +1,153 @@
+/* Bottom Navigation Styles - Glassmorphism */
+
+.bottom-nav {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 65px;
+    z-index: 99;
+    box-shadow: 0 8px 32px rgba(0, 188, 212, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    padding: 0 15px;
+    border-radius: 50px;
+    width: max-content;
+    gap: 5px;
+}
+
+.bottom-nav-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    gap: 4px;
+    padding: 8px 12px;
+    border-radius: 40px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    min-width: 50px;
+}
+
+.bottom-nav-btn:hover {
+    color: #00bcd4;
+    background: rgba(0, 188, 212, 0.2);
+    transform: scale(1.15);
+}
+
+.bottom-nav-btn.active {
+    color: #ffffff;
+    background: rgba(0, 188, 212, 0.35);
+    box-shadow: 0 0 15px rgba(0, 188, 212, 0.5);
+}
+
+.bottom-nav-btn.dev-mode-active {
+    color: #ff6b00;
+    background: rgba(255, 107, 0, 0.3);
+    box-shadow: 0 0 15px rgba(255, 107, 0, 0.5);
+}
+
+.nav-icon {
+    font-size: 1.5rem;
+    display: block;
+    line-height: 1;
+}
+
+.nav-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+}
+
+/* Модификация контейнера приложения для нижней навигации */
+main#app-container,
+#glossary-screen,
+#media3d-screen,
+#feed-screen,
+#medical-screen,
+#custom-screen-container {
+    padding-bottom: 120px;
+}
+
+/* Адаптивный дизайн */
+@media (max-width: 600px) {
+    .bottom-nav {
+        height: 65px;
+    }
+
+    .bottom-nav-btn {
+        padding: 6px 0;
+        gap: 3px;
+    }
+
+    .nav-icon {
+        font-size: 1.5rem;
+    }
+
+    .nav-label {
+        font-size: 0.65rem;
+    }
+
+    main#app-container,
+    #glossary-screen,
+    #media3d-screen,
+    #feed-screen,
+    #medical-screen,
+    #custom-screen-container {
+        padding-bottom: 65px;
+    }
+}
+
+@media (max-width: 480px) {
+    .bottom-nav {
+        height: 60px;
+    }
+
+    .nav-icon {
+        font-size: 1.3rem;
+    }
+
+    .nav-label {
+        display: none;
+    }
+
+    .bottom-nav-btn {
+        padding: 5px 0;
+    }
+
+    main#app-container,
+    #glossary-screen,
+    #media3d-screen,
+    #feed-screen,
+    #medical-screen,
+    #custom-screen-container {
+        padding-bottom: 60px;
+    }
+}
+
+/* Анимация переключения */
+@keyframes navPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.bottom-nav-btn.active .nav-icon {
+    animation: navPulse 0.3s ease;
+}

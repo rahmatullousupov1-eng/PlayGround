@@ -1,0 +1,156 @@
+/* Tests Module Styles */
+
+#tests-screen {
+    min-height: calc(100vh + 100px);
+    background: linear-gradient(135deg, #1a237e, #311b92);
+    background-attachment: fixed;
+    padding: 20px;
+    display: none;
+}
+
+.tests-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.test-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    animation: slideInUp 0.5s ease;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+.test-card:hover {
+    background: rgba(0, 188, 212, 0.15);
+    transform: translateY(-8px) scale(1.02);
+    border-color: rgba(0, 188, 212, 0.6);
+    box-shadow: 0 12px 32px rgba(0, 188, 212, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+.test-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.test-title {
+    color: white;
+    font-size: 1.1rem;
+    margin: 0;
+    flex: 1;
+}
+
+.test-difficulty {
+    background: rgba(0, 188, 212, 0.3);
+    color: #4dd0e1;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    margin-left: 10px;
+}
+
+.test-description {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    margin: 10px 0;
+}
+
+.test-info {
+    display: flex;
+    gap: 15px;
+    margin: 15px 0;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.test-btn {
+    background: linear-gradient(135deg, #00bcd4, #0097a7);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    margin-top: auto;
+}
+
+.test-btn:hover {
+    background: linear-gradient(135deg, #4dd0e1, #00acc1);
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .tests-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.teacher-tests-workspace {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.teacher-tests-section {
+    background: rgba(255, 255, 255, 0.92);
+}
+
+.teacher-table-wrap {
+    overflow-x: auto;
+}
+
+.teacher-report-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.teacher-report-table th,
+.teacher-report-table td {
+    padding: 12px;
+    border-bottom: 1px solid rgba(26, 35, 126, 0.12);
+    text-align: left;
+}
+
+.teacher-report-table th {
+    color: #1a237e;
+    background: rgba(0, 188, 212, 0.08);
+}
+
+.teacher-builder-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.teacher-question-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 16px;
+}
+
+.teacher-question-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.teacher-question-head h4 {
+    margin: 0;
+    color: white;
+}

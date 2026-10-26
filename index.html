@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Политика безопасности: блокирует внешние скрипты, чужие iframe и отправку данных на сторонние сайты.
+         'unsafe-inline' для скриптов нужен временно из-за inline-обработчиков onclick (см. SECURITY_CHANGES.md). -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; media-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.wikipedia.org; frame-src https://www.youtube-nocookie.com https://www.youtube.com; object-src 'self' data: blob:; worker-src 'self' blob:; manifest-src 'self'; base-uri 'self'; form-action 'self'">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="description" content="Invictus — медицинская информационная платформа для студентов и специалистов">
+    <meta name="theme-color" content="#00bcd4">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.json">
+    <title>Invictus — медицинская образовательная платформа</title>
+    
+    <!-- Стили основного приложения -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Стили модулей -->
+    <link rel="stylesheet" href="modules/navbar/navbar.css">
+    <link rel="stylesheet" href="modules/v3-core.css">
+    <link rel="stylesheet" href="modules/home/home.css">
+    <link rel="stylesheet" href="modules/tests/tests.css">
+    <link rel="stylesheet" href="modules/tests/submodules.css">
+    <link rel="stylesheet" href="modules/tests/submodules/invictus-center.css">
+    <link rel="stylesheet" href="modules/progress/progress.css">
+    <link rel="stylesheet" href="modules/settings/settings.css">
+    <link rel="stylesheet" href="modules/settings/submodules.css">
+    <link rel="stylesheet" href="modules/crossword/crossword.css">
+    <link rel="stylesheet" href="modules/glossary/glossary.css">
+    <link rel="stylesheet" href="modules/search/search.css">
+    <link rel="stylesheet" href="modules/scoring/scoring.css">
+    <link rel="stylesheet" href="modules/navbar/bottom-nav.css">
+    <link rel="stylesheet" href="modules/videos/videos.css">
+    <link rel="stylesheet" href="modules/media/media-library.css">
+    <link rel="stylesheet" href="modules/media3d/media3d.css">
+    
+    <!-- Стили дашборда -->
+    <link rel="stylesheet" href="modules/dashboard/dashboard.css">
+    <link rel="stylesheet" href="modules/info/info.css">
+    <link rel="stylesheet" href="modules/profile/profile.css">
+    <link rel="stylesheet" href="modules/feed/feed.css">
+    <link rel="stylesheet" href="modules/medical/medical.css">
+    <link rel="stylesheet" href="modules/notes/notes.css">
+    <link rel="stylesheet" href="modules/knowledge/knowledge.css">
+</head>
+<body>
+    <!-- Экран загрузки -->
+    <div id="loading-screen">
+        <div class="logo-container">
+            <div class="logo-text">
+                <div class="project-name">Invictus</div>
+            </div>
+        </div>
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Загрузка образовательной платформы...</div>
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div class="subtitle">Для студентов медицинского факультета</div>
+    </div>
+
+    <!-- Навигационная панель (будет вставлена через JS) -->
+    <div id="navbar-container"></div>
+
+    <!-- 🔐 ЭКРАН АВТОРИЗАЦИИ -->
+    <div id="auth-screen" class="auth-screen">
+        <div class="auth-container">
+            <div class="auth-header">
+                <div class="auth-logo">🏥</div>
+                <h1 class="auth-title">Invictus</h1>
+                <p class="auth-subtitle">Медицинское образование для студентов</p>
+            </div>
+            
+            <div class="auth-tabs">
+                <button class="auth-tab-btn active" data-tab="login" onclick="switchAuthTab('login')">🔐 Вход</button>
+                <button class="auth-tab-btn" data-tab="register" onclick="switchAuthTab('register')">📝 Регистрация</button>
+            </div>
+            
+            <!-- Форма входа -->
+            <form class="auth-form active" id="login-form" onsubmit="event.preventDefault(); performLogin()">
+                <div class="auth-form-group">
+                    <label class="auth-label">Email адрес</label>
+                    <input type="email" id="login-email" class="auth-input" placeholder="you@example.com" required>
+                </div>
+                
+                <div class="auth-form-group">
+                    <label class="auth-label">Пароль</label>
+                    <input type="password" id="login-password" class="auth-input" placeholder="Введите пароль" required>
+                </div>
+                
+                <div class="auth-checkbox">
+                    <input type="checkbox" id="remember-me">
+                    <label for="remember-me" style="cursor: pointer; margin: 0;">Запомнить меня</label>
+                </div>
+                
+                <button type="submit" class="auth-button">Войти</button>
+            </form>
+            
+            <!-- Форма регистрации -->
+            <form class="auth-form" id="register-form" onsubmit="event.preventDefault(); performRegistration()">
+                <div class="auth-form-group">
+                    <label class="auth-label">Имя и фамилия</label>
+                    <input type="text" id="register-fullname" class="auth-input" placeholder="Иван Петров" required>
+                </div>
+                
+                <div class="auth-form-group">
+                    <label class="auth-label">Email адрес</label>
+                    <input type="email" id="register-email" class="auth-input" placeholder="you@example.com" required>
+                </div>
+                
+                <div class="auth-form-group">
+                    <label class="auth-label">Пароль</label>
+                    <input type="password" id="register-password" class="auth-input" placeholder="Минимум 8 символов (буквы + цифры)" required>
+                </div>
+                
+                <div class="auth-form-group">
+                    <label class="auth-label">Подтвердите пароль</label>
+                    <input type="password" id="register-confirm" class="auth-input" placeholder="Повторите пароль" required>
+                </div>
+                
+                <button type="submit" class="auth-button">Зарегистрироваться</button>
+            </form>
+            
+            <div class="auth-link">
+                © 2026 Invictus. Медицинская образовательная платформа.
+            </div>
+        </div>
+    </div>
+
+    <!-- 📊 ЭКРАН ДАШБОРДА -->
+    <div id="dashboard-screen" class="module-screen" style="display: none;"></div>
+
+    <div class="header">
+        <h1 class="app-title">Invictus</h1>
+        <div id="score-display" style="display: none;"></div>
+        <button class="profile-btn" onclick="profileManager.toggle()">👤</button>
+    </div>
+
+    <!-- Контейнер для экранов модулей -->
+    <main id="app-container">
+        <!-- Home Module -->
+        <section id="home-screen" class="module-screen">
+            <div class="home-greeting" id="home-greeting">
+                <div class="home-greeting-avatar" id="home-greet-avatar">🎓</div>
+                <div class="home-greeting-text">
+                    <div class="home-greeting-hello">Добро пожаловать</div>
+                    <div class="home-greeting-name" id="home-greet-name">Пользователь</div>
+                </div>
+                <button class="home-role-chip" id="home-role-chip" onclick="navigationManager.goTo('info')">🎓 Студент ▾</button>
+            </div>
+
+            <div class="role-portal" id="home-role-portal"></div>
+
+            <div class="home-dashboard-strip" id="home-metrics"></div>
+
+            <div class="home-quick-actions" id="home-quick-actions"></div>
+
+            <div class="home-controls">
+                <input type="text" id="home-search-input" class="home-search-input" placeholder="🔍 Поиск функций..." oninput="homeModule.searchFeatures()">
+                <button class="home-sort-btn" onclick="homeModule.toggleSort()" title="Сортировать от А до Я">А-Я</button>
+            </div>
+
+            <div class="features-grid" id="features-grid"></div>
+        </section>
+
+        <!-- Информация Module (Telegram-style: выбор роли → подразделы) -->
+        <section id="info-screen" class="module-screen">
+            <div id="info-content"></div>
+        </section>
+
+        <!-- Профиль Module (отдельная вкладка) -->
+        <section id="profile-screen" class="module-screen">
+            <div id="profile-content"></div>
+        </section>
+
+        <!-- Unified Knowledge Module -->
+        <section id="subjects-screen" class="module-screen" style="display:none;">
+            <div id="subjects-content"></div>
+        </section>
+
+        <!-- Tests Module -->
+        <section id="tests-screen" class="module-screen">
+            <div id="tests-content"></div>
+        </section>
+
+        <!-- Progress Module -->
+        <section id="progress-screen" class="module-screen">
+            <button class="back-btn" onclick="navigationManager.goBack()">← На главную</button>
+            <h1 class="screen-title">📊 Ваш прогресс</h1>
+            <div class="progress-container" id="progress-container"></div>
+        </section>
+
+        <!-- Scoring & Rating Module -->
+        <section id="scoring-screen" class="module-screen">
+            <div id="scoring-content"></div>
+        </section>
+
+        <!-- Settings Module -->
+        <section id="settings-screen" class="module-screen">
+            <div id="settings-content"></div>
+        </section>
+
+        <!-- Crossword Module -->
+        <section id="crossword-screen" class="module-screen">
+            <button class="back-btn" onclick="navigationManager.goBack()">← Назад</button>
+            <h1 class="screen-title">📄 Медицинский кроссворд</h1>
+            <div class="crossword-container">
+                <div class="crossword-header">
+                    <p class="crossword-description">Разгадайте сканворд, используя медицинские термины</p>
+                    <div class="crossword-stats">
+                        <span id="crossword-solved">Решено: 0/<span id="total-answers">0</span></span>
+                        <button class="btn btn-secondary" onclick="crosswordModule.resetCrossword()">🔄 Сброс</button>
+                    </div>
+                </div>
+
+                <div class="crossword-content">
+                    <div class="crossword-grid" id="crossword-grid">
+                        <!-- Сканворд генерируется JavaScript -->
+                    </div>
+
+                    <div class="crossword-clues">
+                        <div class="clues-section">
+                            <h3>➡️ По горизонтали</h3>
+                            <ul id="horizontal-clues" class="clues-list">
+                                <!-- Подсказки генерируются -->
+                            </ul>
+                        </div>
+
+                        <div class="clues-section">
+                            <h3>⬇️ По вертикали</h3>
+                            <ul id="vertical-clues" class="clues-list">
+                                <!-- Подсказки генерируются -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="crossword-controls">
+                    <button class="btn btn-primary" onclick="crosswordModule.checkAnswers()">✓ Проверить ответы</button>
+                    <button class="btn btn-ghost" onclick="crosswordModule.showHint()">💡 Подсказка</button>
+                </div>
+
+                <div id="crossword-result" class="crossword-result" style="display: none;">
+                    <div class="result-content">
+                        <h2 id="result-title"></h2>
+                        <p id="result-message"></p>
+                        <div id="result-details"></div>
+                        <button class="btn btn-primary" onclick="crosswordModule.closeResult()">Продолжить</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+        <!-- Search Module Screen -->
+        <section id="search-screen" class="module-screen">
+            <button class="back-btn" onclick="navigationManager.goBack()">← Назад</button>
+            <h1 class="screen-title">🔍 Поиск информации</h1>
+            
+            <div class="search-screen-container">
+                <div class="search-hero-card">
+                    <div class="search-hero-kicker">Локальный ассистент данных</div>
+                    <h2>Поиск по документам, файлам и базе приложения</h2>
+                    <p>Здесь поиск работает только по вашим данным: предметы, темы, загруженные документы, изображения и видео-метаданные.</p>
+                </div>
+                <div class="search-input-wrapper">
+                    <input 
+                        type="text" 
+                        id="search-input" 
+                        class="search-input" 
+                        placeholder="Введите запрос (например: 'анатомия', 'сердце', 'лечение')..." 
+                        onkeyup="aiSearchUI.handleSearchInput(this.value)"
+                        onkeypress="if(event.key === 'Enter') aiSearchUI.performSearch(this.value)"
+                    >
+                    <button class="search-btn-submit" onclick="aiSearchUI.performSearch(document.getElementById('search-input').value)">Найти</button>
+                </div>
+
+                <div class="assistant-mode-row">
+                    <button id="assistant-mode-study" class="knowledge-upload-btn active" onclick="aiSearchUI.switchAssistantMode('study')">Ассистент по приложению</button>
+                    <label id="assistant-internet-wrap" class="assistant-internet-toggle" style="display:none">
+                        <input id="assistant-internet-toggle" type="checkbox" onchange="aiSearchUI.toggleInternetAccess(this.checked)">
+                        <span>Интернет-контекст</span>
+                    </label>
+                </div>
+                
+                <div class="search-info">
+                    <p>💡 <strong>Совет:</strong> Используйте точные названия предметов, тем или слова из документа для лучших результатов.</p>
+                    <p>📎 <strong>Загрузка:</strong> PDF, Word, презентации, TXT, изображения и видео поддерживаются в локальной базе знаний.</p>
+                </div>
+
+                <div class="knowledge-upload-panel">
+                    <div class="knowledge-upload-header">
+                        <div>
+                            <h3>Добавить данные</h3>
+                            <p>Загружайте документы и медиа без фиксированного лимита экранов.</p>
+                        </div>
+                        <div class="knowledge-upload-actions">
+                            <button class="knowledge-upload-btn" onclick="document.getElementById('knowledge-file-input').click()">📂 Выбрать файл</button>
+                        </div>
+                    </div>
+                    <input type="file" id="knowledge-file-input" accept=".pdf,.doc,.docx,.ppt,.pptx,.txt,image/*,video/*" multiple style="display:none" onchange="aiSearchUI.handleKnowledgeUpload(event)">
+                    <div id="knowledge-upload-status" class="knowledge-upload-status">Файлы можно загружать пачками. Каждый файл будет проиндексирован локально.</div>
+                </div>
+
+                <div id="search-results" class="search-results"></div>
+            </div>
+        </section>
+        
+    </main>
+
+        <section id="glossary-screen" class="module-screen">
+            <button class="back-btn" onclick="navigationManager.goBack()">← Назад</button>
+            <h1 class="screen-title">📖 Медицинский глоссарий</h1>
+            
+            <div class="glossary-container">
+                <div class="glossary-controls">
+                    <div class="search-box">
+                        <input type="text" id="glossary-search" placeholder="🔍 Поиск терминов..." 
+                               oninput="glossaryModule.filterTerms()">
+                    </div>
+
+                    <div class="filter-group">
+                        <select id="glossary-filter" onchange="glossaryModule.filterByCategory()">
+                            <option value="">Все категории</option>
+                            <option value="анатомия">Анатомия</option>
+                            <option value="физиология">Физиология</option>
+                            <option value="патология">Патология</option>
+                            <option value="фармакология">Фармакология</option>
+                            <option value="микробиология">Микробиология</option>
+                            <option value="диагностика">Диагностика</option>
+                        </select>
+
+                        <select id="glossary-sort" onchange="glossaryModule.sortTerms()">
+                            <option value="name">По названию</option>
+                            <option value="popularity">По популярности</option>
+                            <option value="recent">По новизне</option>
+                        </select>
+                    </div>
+
+                    <div class="glossary-stats">
+                        <span id="terms-count">Найдено: 0 терминов</span>
+                    </div>
+                </div>
+
+                <div class="glossary-content">
+                    <div class="terms-list" id="terms-list">
+                        <!-- Термины генерируются JavaScript -->
+                    </div>
+
+                    <div id="term-detail" class="term-detail" style="display: none;">
+                        <button class="close-btn" onclick="glossaryModule.closeDetail()">✕</button>
+                        <div class="term-detail-content">
+                            <h2 id="detail-term"></h2>
+                            <span id="detail-category" class="category-badge"></span>
+                            <p id="detail-definition" class="definition"></p>
+                            <div id="detail-examples" class="examples-section"></div>
+                            <div id="detail-related" class="related-section"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3D/2D Materials Screen -->
+        <section id="media3d-screen" class="module-screen" style="display:none;">
+            <!-- Content filled by media3dUI.render() -->
+        </section>
+
+        <!-- 📰 Лента новостей (автообновление из интернета) -->
+        <section id="feed-screen" class="module-screen" style="display: none;">
+            <div class="feed-wrap" id="feed-content"></div>
+        </section>
+
+        <!-- 🩺 Медицинский блок: случаи, словарь, каналы -->
+        <section id="medical-screen" class="module-screen" style="display: none;">
+            <div class="medical-wrap" id="medical-content"></div>
+        </section>
+
+        <!-- 📝 Personal notes -->
+        <section id="notes-screen" class="module-screen" style="display:none;">
+            <div id="notes-content"></div>
+        </section>
+
+        <section id="videos-screen" class="module-screen" style="display:none;">
+            <div id="videos-container"></div>
+        </section>
+
+        <!-- Custom screens container -->
+        <section id="custom-screen-container" class="module-screen" style="display: none;">
+            <div id="custom-screen-content"></div>
+        </section>
+
+
+        <!-- Modal для профиля -->
+        <div id="profile-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Профиль пользователя</h3>
+                    <button class="close-btn" onclick="profileManager.close()">×</button>
+                </div>
+                <div id="modal-body" class="modal-body"></div>
+            </div>
+        </div>
+
+        <div id="profile-overlay" class="drawer-overlay" onclick="profileManager.closeDrawer()"></div>
+
+        <aside id="profile-drawer" class="profile-drawer" aria-hidden="true">
+            <div class="drawer-header">
+                <div class="drawer-title">Профиль</div>
+                <button class="close-drawer-btn" onclick="profileManager.closeDrawer()">×</button>
+            </div>
+            <div id="drawer-user-info" class="drawer-user-info"></div>
+            <div id="drawer-menu"></div>
+        </aside>
+
+    <!-- Нижняя навигация -->
+    <nav class="bottom-nav">
+        <button class="bottom-nav-btn active" onclick="navigationManager.goTo('home')" data-screen="home">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Главная</span>
+        </button>
+        <button class="bottom-nav-btn" onclick="navigationManager.goTo('feed')" data-screen="feed">
+            <span class="nav-icon">📰</span>
+            <span class="nav-label">Лента</span>
+        </button>
+        <button class="bottom-nav-btn" onclick="navigationManager.goTo('medical')" data-screen="medical">
+            <span class="nav-icon">🩺</span>
+            <span class="nav-label">Медицина</span>
+        </button>
+        <button class="bottom-nav-btn" onclick="navigationManager.goTo('search')" data-screen="search">
+            <span class="nav-icon">🔍</span>
+            <span class="nav-label">Поиск</span>
+        </button>
+        <button class="bottom-nav-btn" onclick="navigationManager.goTo('profile')" data-screen="profile">
+            <span class="nav-icon">👤</span>
+            <span class="nav-label">Профиль</span>
+        </button>
+    </nav>
+
+    <!-- Скрипты модулей -->
+    <script src="lib/safe.js"></script>
+    <script src="modules/navbar/navbar.js"></script>
+    <script src="modules/home/home.js"></script>
+    <script src="modules/info/info.js"></script>
+    <script src="modules/profile/profile.js"></script>
+    
+    <!-- Subjects module -->
+    <script src="modules/subjects/topics.js"></script>
+    <script src="modules/subjects/subjects.js"></script>
+    
+    <!-- Tests submodules -->
+    <script src="modules/tests/submodules/categories.js"></script>
+    <script src="modules/tests/submodules/questions.js"></script>
+    <script src="modules/tests/submodules/results.js"></script>
+    <script src="modules/tests/submodules/invictus-center.js"></script>
+    <script src="modules/tests/tests.js"></script>
+    
+    <script src="modules/progress/progress.js"></script>
+    
+    <!-- Settings submodules -->
+    <script src="modules/settings/submodules/authentication.js"></script>
+    <script src="modules/settings/submodules/profile.js"></script>
+    <script src="modules/settings/submodules/preferences.js"></script>
+    <script src="modules/settings/submodules/help.js"></script>
+    <script src="modules/settings/settings.js"></script>
+    
+    <script src="modules/crossword/crossword.js"></script>
+    <script src="modules/glossary/glossary.js"></script>
+    <script src="modules/search/search.js"></script>
+    
+    <!-- Knowledge Search modules -->
+    <script src="modules/search/search-ai.js"></script>
+    <script src="modules/search/search-ai-ui.js"></script>
+    
+    <!-- Scoring modules -->
+    <script src="modules/scoring/scoring.js"></script>
+    <script src="modules/scoring/scoring-ui.js"></script>
+    
+    <!-- Scoring and Videos modules -->
+    <script src="modules/videos/videos.js"></script>
+    <script src="modules/media/media-library.js"></script>
+    <script src="modules/media3d/media3d.js"></script>
+    <script src="modules/feed/feed.js"></script>
+    <script src="modules/medical/medical.js"></script>
+    <script src="modules/notes/notes.js"></script>
+    <!-- v3-core.js disabled: it overrode the real medical module with a fake 12-topic stub,
+         added a password-less duplicate "registration" modal, and a hardcoded fake AI assistant.
+         See /home/claude notes from the 2026-09-27 audit for details. -->
+    <!-- <script src="modules/v3-core.js"></script> -->
+    
+    <!-- 📊 Dashboard module -->
+    <script src="modules/dashboard/dashboard.js"></script>
+    
+    <!-- PDF.js для парсинга PDF (опционально) -->
+    <script src="vendor/pdf.min.js"></script>
+    
+    <!-- Mammoth.js для парсинга Word (опционально) -->
+    <script src="vendor/mammoth.browser.min.js"></script>
+    
+    <!-- Unified knowledge/data layer -->
+    <script src="modules/knowledge/content-seed.js"></script>
+    <script src="modules/knowledge/knowledge.js"></script>
+
+    <!-- Главный скрипт приложения -->
+    <script src="lib/idb.js"></script>
+    <script src="lib/cloud.js"></script>
+    <script src="lib/supabase-auth.js"></script>
+    <script src="lib/i18n.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

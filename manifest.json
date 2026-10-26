@@ -1,0 +1,25 @@
+{
+  "name": "Invictus",
+  "short_name": "Invictus",
+  "description": "Медицинская образовательная платформа для студентов",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1a237e",
+  "theme_color": "#00bcd4",
+  "icons": [
+    {
+      "src": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='40' fill='%231a237e'/><rect x='80' y='24' width='32' height='144' rx='10' fill='white'/><rect x='24' y='80' width='144' height='32' rx='10' fill='white'/><rect x='82' y='24' width='28' height='144' rx='10' fill='%23ffffff'/></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='96' fill='%231a237e'/><rect x='214' y='96' width='84' height='320' rx='24' fill='white'/><rect x='96' y='214' width='320' height='84' rx='24' fill='white'/><rect x='224' y='96' width='64' height='320' rx='20' fill='%23ffffff'/></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

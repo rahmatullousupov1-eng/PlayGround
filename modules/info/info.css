@@ -1,0 +1,124 @@
+/* Информация: Telegram-style role accordion */
+.info-head {
+    margin-bottom: 16px;
+}
+
+.info-subtitle {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 6px 0 0;
+}
+
+.info-role-current {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-radius: 16px;
+    background: rgba(0, 188, 212, 0.1);
+    border: 1px solid rgba(0, 188, 212, 0.25);
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 14px;
+}
+
+.info-role-current strong {
+    color: #4dd0e1;
+}
+
+.info-roles {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.info-role {
+    border-radius: 20px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.info-role-open {
+    border-color: rgba(0, 188, 212, 0.55);
+    box-shadow: 0 10px 26px rgba(0, 188, 212, 0.14);
+}
+
+.info-role-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 15px;
+    cursor: pointer;
+}
+
+.info-role-icon {
+    font-size: 1.6rem;
+}
+
+.info-role-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.info-role-title {
+    font-weight: 700;
+    font-size: 0.98rem;
+    color: #fff;
+}
+
+.info-role-desc {
+    font-size: 0.74rem;
+    color: rgba(255, 255, 255, 0.55);
+    margin-top: 2px;
+}
+
+.info-role-chevron {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
+}
+
+.info-subitems {
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    padding: 6px 0;
+    animation: fadeInUp 0.25s ease both;
+}
+
+.info-subitem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.info-subitem:hover {
+    background: rgba(0, 188, 212, 0.1);
+}
+
+.info-subitem-icon {
+    font-size: 1.25rem;
+}
+
+.info-subitem-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.info-subitem-title {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #fff;
+}
+
+.info-subitem-desc {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.info-arrow {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 1.2rem;
+}

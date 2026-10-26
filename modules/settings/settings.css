@@ -1,0 +1,351 @@
+/* Settings Module Styles */
+
+#settings-screen {
+    min-height: calc(100vh + 100px);
+    background: linear-gradient(135deg, #1a237e, #311b92);
+    background-attachment: fixed;
+    padding: 20px;
+    display: none;
+}
+
+.settings-container {
+    max-width: 600px;
+    margin: 30px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.settings-section {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+    padding: 20px;
+    animation: slideInUp 0.5s ease;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.settings-section:hover {
+    border-color: rgba(0, 188, 212, 0.4);
+    box-shadow: 0 12px 32px rgba(0, 188, 212, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+.settings-section-title {
+    color: #4dd0e1;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.settings-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.settings-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.form-select {
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 2px solid var(--border);
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.form-select:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #00bcd4;
+}
+
+.toggle-switch {
+    width: 50px;
+    height: 25px;
+    cursor: pointer;
+}
+
+.current-avatar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background: rgba(0, 188, 212, 0.1);
+    border-radius: 8px;
+}
+
+.avatar-large {
+    font-size: 3rem;
+    display: block;
+}
+
+.btn-primary,
+.btn-danger {
+    width: 100%;
+}
+
+.btn-danger {
+    padding: 12px 24px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: linear-gradient(135deg, #f44336, #d32f2f);
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(244, 67, 54, 0.3);
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #ef5350, #e53935);
+    transform: scale(1.02);
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .settings-container {
+        margin: 20px auto;
+    }
+}
+/* ============================================
+   Authentication Modal Styles
+   ============================================ */
+
+.auth-modal {
+    animation: fadeIn 0.3s ease;
+}
+
+.auth-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid rgba(255,255,255,0.1);
+    padding-bottom: 10px;
+}
+
+.auth-tab {
+    flex: 1;
+    padding: 10px 15px;
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -10px;
+}
+
+.auth-tab:hover {
+    color: rgba(255,255,255,0.9);
+}
+
+.auth-tab.active {
+    color: #4dd0e1;
+    border-bottom-color: #4dd0e1;
+}
+
+.auth-tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.auth-tab-content.active {
+    display: block;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    color: rgba(255,255,255,0.9);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.form-input,
+.form-select {
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.08);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    color: white;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+.form-input:focus,
+.form-select:focus {
+    outline: none;
+    background: rgba(255,255,255,0.12);
+    border-color: #4dd0e1;
+    box-shadow: 0 0 8px rgba(77, 208, 225, 0.3);
+}
+
+.form-input::placeholder {
+    color: rgba(255,255,255,0.4);
+}
+
+.form-select option {
+    background: #1a1a2e;
+    color: white;
+}
+
+.registration-form {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 25px;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.registration-form h2 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    color: #4dd0e1;
+    font-size: 1.3rem;
+}
+
+.registration-form > p:not([style]) {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+/* ============================================
+   Telegram-style Settings
+   ============================================ */
+.tg-settings {
+    max-width: 600px;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.tg-profile-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 16px;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.tg-avatar {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #00bcd4, #0097a7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    flex-shrink: 0;
+}
+
+.tg-profile-info { flex: 1; min-width: 0; }
+.tg-name { color: white; font-weight: 700; font-size: 1.05rem; }
+.tg-status { color: rgba(255, 255, 255, 0.6); font-size: 0.9rem; margin-top: 2px; }
+
+.tg-section-title {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 14px 16px 6px;
+}
+
+.tg-menu {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 6px;
+    backdrop-filter: blur(15px);
+}
+
+.tg-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 16px;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    transition: background 0.2s ease;
+    color: white;
+    user-select: none;
+}
+.tg-item:last-child { border-bottom: none; }
+.tg-item:hover { background: rgba(255, 255, 255, 0.08); }
+.tg-item:active { background: rgba(255, 255, 255, 0.12); }
+
+.tg-icon { font-size: 1.25rem; width: 28px; text-align: center; flex-shrink: 0; }
+.tg-label { flex: 1; font-size: 0.95rem; }
+.tg-arrow { color: rgba(255, 255, 255, 0.35); font-size: 1.2rem; }
+.tg-value { color: rgba(255, 255, 255, 0.5); font-size: 0.9rem; }
+
+.tg-toggle {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 3px 10px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.5);
+    transition: all 0.25s ease;
+}
+.tg-toggle.on {
+    background: #00bcd4;
+    color: white;
+    box-shadow: 0 0 12px rgba(0, 188, 212, 0.5);
+}
+
+.tg-danger .tg-label { color: #ff8a80; }

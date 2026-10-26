@@ -1,0 +1,147 @@
+/* ============================================================
+   Invictus v3.0 — 🩺 Медицинский блок
+   ============================================================ */
+
+.medical-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 18px 16px 110px;
+}
+
+.med-head h1 {
+    font-size: 1.55rem;
+    color: #fff;
+    margin: 0 0 4px;
+}
+
+.med-head p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    margin: 0 0 16px;
+}
+
+.med-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.med-tab {
+    padding: 10px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.med-tab.active {
+    background: linear-gradient(135deg, rgba(0, 188, 212, 0.32), rgba(38, 198, 218, 0.14));
+    border-color: rgba(0, 188, 212, 0.7);
+    color: #fff;
+}
+
+.med-search-row {
+    margin-bottom: 14px;
+}
+
+.med-search {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.07);
+    color: #fff;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.med-search::placeholder {
+    color: rgba(255, 255, 255, 0.45);
+}
+
+.med-cases, .med-terms, .med-channels {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.med-case-card, .med-term-card, .med-channel-card {
+    padding: 14px 16px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.med-case-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 6px;
+}
+
+.med-case-tags {
+    display: flex;
+    gap: 6px;
+}
+
+.med-case-tags i {
+    font-style: normal;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(0, 188, 212, 0.18);
+    color: #7ef2ff;
+}
+
+.med-case-text {
+    font-size: 0.86rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.5;
+}
+
+.med-term-name {
+    font-weight: 700;
+    color: #7ef2ff;
+    margin-bottom: 3px;
+}
+
+.med-term-def {
+    font-size: 0.86rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.med-channel-card {
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.med-channel-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(0, 188, 212, 0.5);
+}
+
+.med-channel-name {
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 3px;
+}
+
+.med-channel-desc {
+    font-size: 0.84rem;
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.med-empty {
+    text-align: center;
+    padding: 30px 10px;
+    color: rgba(255, 255, 255, 0.5);
+}

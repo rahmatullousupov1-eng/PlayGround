@@ -1,0 +1,349 @@
+/* ============================================================
+   Invictus — Главный экран (новый дизайн v4)
+   Компактный greeting + выбор роли + быстрые действия + сетка
+   ============================================================ */
+
+/* --- Приветствие --- */
+.home-greeting {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px;
+    border-radius: 22px;
+    background: linear-gradient(135deg, rgba(0, 188, 212, 0.16), rgba(26, 35, 126, 0.55));
+    border: 1px solid rgba(126, 232, 255, 0.22);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
+    backdrop-filter: blur(14px);
+    animation: fadeInUp 0.5s ease both;
+}
+
+.home-greeting-avatar {
+    width: 56px;
+    height: 56px;
+    min-width: 56px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.9rem;
+    background: linear-gradient(135deg, #00bcd4, #1a237e);
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    box-shadow: 0 6px 18px rgba(0, 188, 212, 0.35);
+}
+
+.home-greeting-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.home-greeting-hello {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(178, 235, 242, 0.85);
+    margin-bottom: 2px;
+}
+
+.home-greeting-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.home-role-chip {
+    border: none;
+    cursor: pointer;
+    padding: 9px 14px;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #051022;
+    background: linear-gradient(135deg, #4dd0e1, #80deea);
+    box-shadow: 0 4px 14px rgba(0, 188, 212, 0.4);
+    transition: transform 0.2s ease;
+    white-space: nowrap;
+}
+
+.home-role-chip:hover {
+    transform: scale(1.05);
+}
+
+/* --- Портал выбора роли --- */
+.role-portal {
+    margin-top: 18px;
+}
+
+.role-portal-head h2 {
+    margin: 0 0 4px;
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.role-portal-head p {
+    margin: 0 0 12px;
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.role-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.role-card {
+    border-radius: 18px;
+    padding: 14px 10px;
+    text-align: center;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.25s ease;
+    position: relative;
+}
+
+.role-card:hover {
+    background: rgba(0, 188, 212, 0.12);
+    transform: translateY(-2px);
+}
+
+.role-card.active {
+    background: linear-gradient(135deg, rgba(0, 188, 212, 0.28), rgba(26, 35, 126, 0.4));
+    border-color: rgba(0, 188, 212, 0.7);
+    box-shadow: 0 8px 22px rgba(0, 188, 212, 0.25);
+}
+
+.role-card-icon {
+    font-size: 1.7rem;
+    margin-bottom: 6px;
+}
+
+.role-card-title {
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: #fff;
+    margin-bottom: 3px;
+}
+
+.role-card-desc {
+    font-size: 0.68rem;
+    color: rgba(255, 255, 255, 0.55);
+    line-height: 1.35;
+}
+
+.role-card-check {
+    margin-top: 8px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #4dd0e1;
+}
+
+.role-card-check-empty {
+    color: rgba(255, 255, 255, 0.35);
+    font-weight: 500;
+}
+
+/* --- Метрики --- */
+.home-dashboard-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 18px 0;
+}
+
+.home-metric-card {
+    padding: 14px 12px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(126, 232, 255, 0.14);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+.metric-label {
+    display: block;
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: rgba(178, 235, 242, 0.75);
+    margin-bottom: 6px;
+}
+
+.home-metric-card strong {
+    font-size: 1.1rem;
+    color: #fff;
+}
+
+/* --- Быстрые действия --- */
+.home-quick-actions {
+    display: flex;
+    gap: 9px;
+    flex-wrap: wrap;
+    margin: 4px 0 18px;
+}
+
+.home-quick-btn {
+    padding: 10px 15px;
+    border-radius: 999px;
+    border: 1px solid rgba(126, 232, 255, 0.18);
+    background: rgba(0, 188, 212, 0.1);
+    color: #eaffff;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.82rem;
+    transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.home-quick-btn:hover {
+    transform: translateY(-2px);
+    background: rgba(0, 188, 212, 0.22);
+    border-color: rgba(0, 188, 212, 0.5);
+}
+
+/* --- Поиск и сортировка --- */
+.home-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.home-search-input {
+    flex: 1;
+    padding: 12px 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(0, 0, 0, 0.25);
+    color: #fff;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.home-search-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.home-search-input:focus {
+    border-color: rgba(0, 188, 212, 0.7);
+}
+
+.home-sort-btn {
+    padding: 0 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(0, 188, 212, 0.12);
+    color: #eaffff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.home-sort-btn:hover,
+.home-sort-btn.active {
+    background: rgba(0, 188, 212, 0.3);
+    border-color: rgba(0, 188, 212, 0.6);
+}
+
+/* --- Сетка функций --- */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.feature-card {
+    border-radius: 18px;
+    padding: 16px 14px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    transition: all 0.25s ease;
+    animation: fadeInUp 0.4s ease both;
+}
+
+.feature-card:hover {
+    transform: translateY(-3px);
+    background: rgba(0, 188, 212, 0.12);
+    border-color: rgba(0, 188, 212, 0.4);
+}
+
+.feature-card.hidden,
+.feature-card.role-hidden {
+    display: none;
+}
+
+.feature-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.feature-icon {
+    font-size: 1.6rem;
+}
+
+.feature-fav-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.feature-fav-btn:hover {
+    color: #ffd54f;
+    transform: scale(1.2);
+}
+
+.feature-fav-btn.favorited {
+    color: #ffd54f;
+}
+
+.feature-title {
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: #fff;
+    margin-bottom: 4px;
+}
+
+.feature-desc {
+    font-size: 0.74rem;
+    color: rgba(255, 255, 255, 0.55);
+    line-height: 1.4;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Адаптив --- */
+@media (max-width: 480px) {
+    .role-cards {
+        gap: 8px;
+    }
+
+    .role-card {
+        padding: 12px 8px;
+    }
+
+    .role-card-desc {
+        font-size: 0.64rem;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+}

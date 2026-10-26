@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://invictus.rahmatullousupov1.workers.dev/sitemap.xml
