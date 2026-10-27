@@ -77,6 +77,10 @@ const progressModule = {
                 </div>
             </div>
         `;
+
+        if (typeof knowledgeModule !== 'undefined' && typeof knowledgeModule.renderProgressAddon === 'function') {
+            container.insertAdjacentHTML('beforeend', knowledgeModule.renderProgressAddon());
+        }
     },
     
     calculateTotalTopics: function() {

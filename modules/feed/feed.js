@@ -87,7 +87,7 @@ const feedModule = {
                 source = 'Википедия';
             }
         } catch (e) {
-            console.warn('📰 Лента: сеть недоступна, используем кэш', e);
+            console.warn('📰 Новости: сеть недоступна, используем кэш', e);
         }
 
         if (items.length) {
@@ -108,7 +108,7 @@ const feedModule = {
             statusEl.textContent = '🔄 Обновлено ' + t + (this.source ? ' • ' + this.source : '');
         }
         if (typeof showTempMessage === 'function' && this.items.length) {
-            showTempMessage('📰 Лента обновлена: ' + this.items.length + ' материалов');
+            showTempMessage('📰 Новости обновлены: ' + this.items.length + ' материалов');
         }
         this.render();
     },
@@ -136,8 +136,8 @@ const feedModule = {
 
         root.innerHTML = `
             <div class="feed-head">
-                <h1>📰 Лента новостей</h1>
-                <p>Свежие медицинские материалы — автоматически из интернета</p>
+                <h1>📰 Новости</h1>
+                <p>Медицинские новости и заметки сообщества — обновляются автоматически</p>
             </div>
             <div class="feed-composer">
                 <textarea id="feed-post-text" maxlength=1000 placeholder="Поделитесь заметкой, вопросом или полезным материалом..."></textarea>

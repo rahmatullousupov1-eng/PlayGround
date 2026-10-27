@@ -80,7 +80,7 @@ const preferencesModule = {
         
         let html = `
             <div class="preferences-container">
-                <button class="btn-back" onclick="settingsModule.show()">← Назад к настройкам</button>
+                <button class="btn-back" onclick="navigationManager.goTo('profile')">← Назад к профилю</button>
                 
                 <h2>⚙️ Настройки приложения</h2>
                 

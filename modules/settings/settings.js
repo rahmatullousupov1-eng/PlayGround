@@ -10,9 +10,26 @@ const settingsModule = {
     
     show: function() {
         const screen = document.getElementById('settings-screen');
-        if (screen) {
-            screen.style.display = 'block';
-            this.renderSettings();
+        if (!this._panelMode) {
+            if (typeof navigationManager !== 'undefined') {
+                navigationManager.goTo('profile');
+            }
+            return;
+        }
+        this._panelMode = false;
+        if (screen) screen.style.display = 'block';
+    },
+
+    openPanel: function(render) {
+        this._panelMode = true;
+        try {
+            render();
+        } catch (error) {
+            this._panelMode = false;
+            throw error;
+        }
+        if (typeof navigationManager !== 'undefined') {
+            navigationManager.goTo('settings');
         }
     },
     
@@ -30,16 +47,9 @@ const settingsModule = {
         const content = document.getElementById('settings-content');
         if (!content) return;
 
-        // Проверить статус пользователя (роль = фильтр, не замок)
         const isGuest = Boolean(appData.user && appData.user.isGuest);
-        const roleKey = (typeof homeModule !== 'undefined' && typeof homeModule.getCurrentRole === 'function')
-            ? homeModule.getCurrentRole()
-            : (appData.user && appData.user.role === 'doctor' ? 'doctor' : 'student');
-        const roleLabels = { student: 'Студент', doctor: 'Врач', guest: 'Гость' };
-        const roleLabel = roleLabels[roleKey] || 'Студент';
-        const roleIcons = { student: '🎓', doctor: '🩺', guest: '👤' };
-        const roleIcon = roleIcons[roleKey] || '🎓';
-        const devActive = typeof developerMode !== 'undefined' && developerMode.isActive === true;
+        const roleLabel = typeof getRoleLabel === 'function' ? getRoleLabel(appData.user) : 'Студент';
+        const roleIcon = typeof getRoleEmoji === 'function' ? getRoleEmoji(appData.user) : '🎓';
 
         let html = `
             <div class="tg-settings">

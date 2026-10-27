@@ -1116,63 +1116,58 @@ function initApp() {
 
     console.log('✓ Critical modules initialized — showing UI fast');
 
-    // Показать загрузочный экран 2.5 секунды, затем скрыть и инициализировать остальное в фоне
-    const loading = document.getElementById(`loading-screen`);
-    const HIDE_DELAY = 900; // 0.9s (was 2.5s - Phase 3 UX)
-    if (loading) {
-        setTimeout(() => {
-            loading.style.display = 'none';
-            // Initialize navigation-critical modules before first user taps.
+    const loading = document.getElementById('loading-screen');
+    const revealApp = () => {
+        if (loading) loading.style.display = 'none';
+
+        // Initialize navigation-critical modules before first user taps.
+        try {
+            if (typeof subjectsModule !== 'undefined') subjectsModule.init(appData);
+            if (typeof testsModule !== 'undefined') testsModule.init(appData);
+            if (typeof progressModule !== 'undefined') progressModule.init(appData);
+            if (typeof crosswordModule !== 'undefined') crosswordModule.init(appData);
+            if (typeof glossaryModule !== 'undefined') glossaryModule.init(appData);
+            if (typeof searchModule !== 'undefined') searchModule.init(appData);
+        } catch (e) {
+            console.warn('⚠️ Error initializing nav modules:', e);
+        }
+
+        const finishInit = () => {
             try {
-                if (typeof subjectsModule !== 'undefined') subjectsModule.init(appData);
-                if (typeof testsModule !== 'undefined') testsModule.init(appData);
-                if (typeof progressModule !== 'undefined') progressModule.init(appData);
-                if (typeof crosswordModule !== 'undefined') crosswordModule.init(appData);
-                if (typeof glossaryModule !== 'undefined') glossaryModule.init(appData);
-                if (typeof searchModule !== 'undefined') searchModule.init(appData);
-            } catch (e) {
-                console.warn('⚠️ Error initializing nav modules:', e);
+                if (typeof aiSearchModule !== 'undefined') aiSearchModule.init(appData);
+                if (typeof aiSearchUI !== 'undefined') aiSearchUI.init(aiSearchModule);
+                if (typeof scoringModule !== 'undefined') scoringModule.init(appData);
+                if (typeof scoringUI !== 'undefined') scoringUI.init();
+                if (typeof videosModule !== 'undefined') videosModule.init(appData);
+                if (typeof mediaLibrary !== 'undefined') mediaLibrary.init();
+                if (typeof media3dModule !== 'undefined') media3dModule.init(appData);
+                if (typeof media3dUI !== 'undefined') media3dUI.init();
+
+                console.log('✓ All modules initialized (deferred)');
+            } catch (err) {
+                console.error('❌ Error during deferred init:', err);
             }
+        };
 
-            // После скрытия загрузки — продолжить инициализацию менее критичных модулей
-            const finishInit = () => {
-                try {
-                    // Knowledge Search modules
-                    if (typeof aiSearchModule !== 'undefined') aiSearchModule.init(appData);
-                    if (typeof aiSearchUI !== 'undefined') aiSearchUI.init(aiSearchModule);
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(finishInit, {timeout: 1000});
+        } else {
+            setTimeout(finishInit, 50);
+        }
 
-                    // Developer tools are no longer initialized in the public app.
-                    // Scoring and Videos modules
-                    if (typeof scoringModule !== 'undefined') scoringModule.init(appData);
-                    if (typeof scoringUI !== 'undefined') scoringUI.init();
-                    if (typeof videosModule !== 'undefined') videosModule.init(appData);
-                    if (typeof mediaLibrary !== 'undefined') mediaLibrary.init();
-                    if (typeof media3dModule !== 'undefined') media3dModule.init(appData);
-                    if (typeof media3dUI !== 'undefined') media3dUI.init();
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js').then(() => {
+                console.log('✓ Service Worker registered');
+            }).catch((swErr) => {
+                console.warn('⚠️ Service Worker registration failed:', swErr);
+            });
+        }
+    };
 
-                    console.log('✓ All modules initialized (deferred)');
-                } catch (err) {
-                    console.error('❌ Error during deferred init:', err);
-                }
-            };
-
-            // Use requestIdleCallback when available to avoid blocking rendering
-            if ('requestIdleCallback' in window) {
-                requestIdleCallback(finishInit, {timeout: 1000});
-            } else {
-                // Small timeout to yield to the browser
-                setTimeout(finishInit, 50);
-            }
-
-            // Try to register service worker for offline support
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('/service-worker.js').then(() => {
-                    console.log('✓ Service Worker registered');
-                }).catch((swErr) => {
-                    console.warn('⚠️ Service Worker registration failed:', swErr);
-                });
-            }
-        }, HIDE_DELAY);
+    if (loading) {
+        requestAnimationFrame(() => requestAnimationFrame(revealApp));
+    } else {
+        revealApp();
     }
     
     // Не показывать регистрацию автоматически

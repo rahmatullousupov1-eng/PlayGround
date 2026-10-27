@@ -180,7 +180,7 @@ const dashboardModule = {
                             <h4>Открыть аналитику рейтинга</h4>
                             <p class="topic-preview">Сравнение студентов по предметам и общим баллам.</p>
                         </div>
-                        <div class="recent-topic-item" onclick="navigationManager.goTo('settings')">
+                        <div class="recent-topic-item" onclick="navigationManager.goTo('profile')">
                             <div class="topic-breadcrumb"><strong>Профиль</strong></div>
                             <h4>Редактировать профиль преподавателя</h4>
                             <p class="topic-preview">Проверьте аккаунт, роль и настройки интерфейса.</p>
@@ -229,7 +229,7 @@ const dashboardModule = {
                                 <h4>Изменить предметы, темы и медиа</h4>
                                 <p class="topic-preview">Редактирование данных сохраняется в appData и localStorage приложения.</p>
                             </div>
-                            <div class="recent-topic-item" onclick="navigationManager.goTo('settings')">
+                            <div class="recent-topic-item" onclick="navigationManager.goTo('profile')">
                                 <div class="topic-breadcrumb"><strong>Система</strong></div>
                                 <h4>Настройки и профиль</h4>
                                 <p class="topic-preview">Доступ к профилю, предпочтениям и системным параметрам.</p>

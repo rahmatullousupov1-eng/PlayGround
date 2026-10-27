@@ -1,16 +1,11 @@
 /* ============================================================
-   Invictus v4 — 👤 ПРОФИЛЬ (отдельная вкладка)
-   Режим разработчика: 3 быстрых тапа по аватару
+   Invictus v4 — 👤 ПРОФИЛЬ
+   Аккаунт и настройки в одном месте.
+   Режим разработчика: 3 быстрых тапа по аватару.
    ============================================================ */
 const profileModule = {
     taps: 0,
     _timer: null,
-
-    ROLES: {
-        student: { title: 'Студент', icon: '🎓' },
-        doctor: { title: 'Врач', icon: '🩺' },
-        guest: { title: 'Гость', icon: '👤' }
-    },
 
     show: function() {
         const screen = document.getElementById('profile-screen');
@@ -23,32 +18,17 @@ const profileModule = {
         if (screen) screen.style.display = 'none';
     },
 
-    getCurrentRole: function() {
-        if (typeof homeModule !== 'undefined' && typeof homeModule.getCurrentRole === 'function') {
-            return homeModule.getCurrentRole();
-        }
-        return 'student';
-    },
-
     render: function() {
         const root = document.getElementById('profile-content');
         if (!root) return;
 
         const user = appData?.user;
         const isGuest = Boolean(user && user.isGuest);
-        const role = this.getCurrentRole();
-        const roleMeta = this.ROLES[role] || this.ROLES.student;
-        const avatar = (user && user.avatar) || roleMeta.icon;
+        const avatar = (user && user.avatar) || (typeof getRoleEmoji === 'function' ? getRoleEmoji(user) : '👤');
         const name = user && !isGuest && user.fullname ? user.fullname : 'Гость';
         const roleLine = isGuest
             ? 'Войдите, чтобы открыть личный кабинет'
-            : roleMeta.title;
-
-        const roleChips = Object.keys(this.ROLES).map(key => `
-            <button class="profile-role-chip ${role === key ? 'active' : ''}" onclick="profileModule.setRole('${key}')">
-                ${this.ROLES[key].icon} ${this.ROLES[key].title}
-            </button>
-        `).join('');
+            : (typeof getRoleLabel === 'function' ? getRoleLabel(user) : 'Студент');
 
         root.innerHTML = `
             <div class="profile-head">
@@ -58,20 +38,17 @@ const profileModule = {
             <div class="profile-hero" onclick="profileModule.handleTap()" title="Нажмите 3 раза для режима разработчика">
                 <div class="profile-avatar">${avatar}</div>
                 <div class="profile-hero-info">
-                    <div class="profile-name">${name}</div>
-                    <div class="profile-role-line">${roleLine}</div>
+                    <div class="profile-name">${Safe.esc(name)}</div>
+                    <div class="profile-role-line">${Safe.esc(roleLine)}</div>
                 </div>
                 <span class="profile-dev-hint">⚙️</span>
             </div>
             <div class="profile-dev-caption">3 тапа по карточке — режим разработчика</div>
 
-            <div class="tg-section-title">Роль</div>
-            <div class="profile-role-chips">${roleChips}</div>
-
             <div class="tg-section-title">Аккаунт</div>
             <div class="tg-menu">
                 ${isGuest ? `
-                <div class="tg-item" onclick="navigationManager.goTo('settings')">
+                <div class="tg-item" onclick="profileModule.login()">
                     <span class="tg-icon">🔐</span>
                     <span class="tg-label">Вход / Регистрация</span>
                     <span class="tg-arrow">›</span>
@@ -81,23 +58,38 @@ const profileModule = {
                     <span class="tg-label">Личный кабинет</span>
                     <span class="tg-arrow">›</span>
                 </div>
-                <div class="tg-item" onclick="navigationManager.goTo('settings')">
+                <div class="tg-item" onclick="profileModule.editProfile()">
                     <span class="tg-icon">✏️</span>
                     <span class="tg-label">Изменить профиль</span>
                     <span class="tg-arrow">›</span>
-                </div>`}
-            </div>
-
-            <div class="tg-section-title">Система</div>
-            <div class="tg-menu">
+                </div>
                 <div class="tg-item" onclick="navigationManager.goTo('notes')">
                     <span class="tg-icon">📝</span>
                     <span class="tg-label">Мои конспекты</span>
                     <span class="tg-arrow">›</span>
+                </div>`}
+            </div>
+
+            <div class="tg-section-title">Настройки</div>
+            <div class="tg-menu">
+                <div class="tg-item" onclick="profileModule.openPreferences()">
+                    <span class="tg-icon">🎨</span>
+                    <span class="tg-label">Язык, тема и уведомления</span>
+                    <span class="tg-arrow">›</span>
                 </div>
-                <div class="tg-item" onclick="navigationManager.goTo('settings')">
-                    <span class="tg-icon">⚙️</span>
-                    <span class="tg-label">Настройки приложения</span>
+                <div class="tg-item" onclick="settingsModule.clearCache()">
+                    <span class="tg-icon">🧹</span>
+                    <span class="tg-label">Очистить кэш</span>
+                    <span class="tg-arrow">›</span>
+                </div>
+                <div class="tg-item" onclick="settingsModule.showAbout()">
+                    <span class="tg-icon">ℹ️</span>
+                    <span class="tg-label">О приложении</span>
+                    <span class="tg-arrow">›</span>
+                </div>
+                <div class="tg-item" onclick="profileModule.openHelp()">
+                    <span class="tg-icon">❓</span>
+                    <span class="tg-label">Справка и ЧаВО</span>
                     <span class="tg-arrow">›</span>
                 </div>
                 ${!isGuest ? `
@@ -110,11 +102,28 @@ const profileModule = {
         `;
     },
 
-    setRole: function(role) {
-        if (typeof homeModule !== 'undefined' && typeof homeModule.setRole === 'function') {
-            homeModule.setRole(role);
+    login: function() {
+        if (typeof settingsModule !== 'undefined' && typeof settingsModule.showAuthModal === 'function') {
+            settingsModule.showAuthModal();
         }
-        this.render();
+    },
+
+    openPreferences: function() {
+        this.openPanel(() => preferencesModule.show());
+    },
+
+    openHelp: function() {
+        this.openPanel(() => helpModule.show());
+    },
+
+    editProfile: function() {
+        this.openPanel(() => profileSubmodule.show());
+    },
+
+    openPanel: function(render) {
+        if (typeof settingsModule !== 'undefined' && typeof settingsModule.openPanel === 'function') {
+            settingsModule.openPanel(render);
+        }
     },
 
     logout: function() {

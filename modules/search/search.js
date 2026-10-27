@@ -315,10 +315,13 @@ const searchModule = {
     
     // Закрыть поиск
     closeSearch: function() {
-        // Clear search input and go back  
         const searchInput = document.getElementById('search-input');
         if (searchInput) searchInput.value = '';
-        if (typeof navigationManager !== 'undefined' && navigationManager.currentScreen === 'search' && navigationManager.history.length > 1) {
+        const modal = document.getElementById('search-modal');
+        if (modal) modal.style.display = 'none';
+
+        if (typeof navigationManager === 'undefined' || navigationManager.currentScreen !== 'search') return;
+        if (navigationManager.history.length > 1) {
             navigationManager.goBack();
             return;
         }

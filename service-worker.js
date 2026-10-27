@@ -1,4 +1,4 @@
-const CACHE_NAME = 'invictus-v4-6-subjects-20261026-fix1';
+const CACHE_NAME = 'invictus-v4-7-home-ux-20261027-1';
 const CORE_ASSETS = [
   './',
   './index.html',

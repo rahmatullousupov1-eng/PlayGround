@@ -889,6 +889,7 @@ function showOwnerSetupModal() {
                 </button>
             </div>
         `;
+        if (typeof settingsModule !== 'undefined') settingsModule._panelMode = true;
         navigationManager.goTo('settings');
     }
 }

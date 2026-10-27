@@ -89,8 +89,8 @@ const medicalModule = {
 
         root.innerHTML = `
             <div class="med-head">
-                <h1>🩺 Медицина</h1>
-                <p>Клинические случаи, словарь и полезные ресурсы для врачей и студентов</p>
+                <h1>🩺 Клиническая практика</h1>
+                <p>Клинические случаи, словарь и профессиональные ресурсы для врачей и студентов</p>
             </div>
             <div class="med-tabs">
                 <button class="med-tab ${tab === 'cases' ? 'active' : ''}" onclick="medicalModule.setTab('cases')">🏥 Случаи</button>

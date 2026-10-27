@@ -3,6 +3,12 @@
    Компактный greeting + выбор роли + быстрые действия + сетка
    ============================================================ */
 
+main#app-container #home-screen {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: calc(64px + 18px) clamp(16px, 3vw, 32px) 120px;
+}
+
 /* --- Приветствие --- */
 .home-greeting {
     display: flex;
@@ -51,100 +57,6 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-.home-role-chip {
-    border: none;
-    cursor: pointer;
-    padding: 9px 14px;
-    border-radius: 999px;
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: #051022;
-    background: linear-gradient(135deg, #4dd0e1, #80deea);
-    box-shadow: 0 4px 14px rgba(0, 188, 212, 0.4);
-    transition: transform 0.2s ease;
-    white-space: nowrap;
-}
-
-.home-role-chip:hover {
-    transform: scale(1.05);
-}
-
-/* --- Портал выбора роли --- */
-.role-portal {
-    margin-top: 18px;
-}
-
-.role-portal-head h2 {
-    margin: 0 0 4px;
-    font-size: 1.02rem;
-    font-weight: 700;
-    color: #fff;
-}
-
-.role-portal-head p {
-    margin: 0 0 12px;
-    font-size: 0.78rem;
-    color: rgba(255, 255, 255, 0.6);
-}
-
-.role-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-}
-
-.role-card {
-    border-radius: 18px;
-    padding: 14px 10px;
-    text-align: center;
-    cursor: pointer;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.25s ease;
-    position: relative;
-}
-
-.role-card:hover {
-    background: rgba(0, 188, 212, 0.12);
-    transform: translateY(-2px);
-}
-
-.role-card.active {
-    background: linear-gradient(135deg, rgba(0, 188, 212, 0.28), rgba(26, 35, 126, 0.4));
-    border-color: rgba(0, 188, 212, 0.7);
-    box-shadow: 0 8px 22px rgba(0, 188, 212, 0.25);
-}
-
-.role-card-icon {
-    font-size: 1.7rem;
-    margin-bottom: 6px;
-}
-
-.role-card-title {
-    font-weight: 700;
-    font-size: 0.88rem;
-    color: #fff;
-    margin-bottom: 3px;
-}
-
-.role-card-desc {
-    font-size: 0.68rem;
-    color: rgba(255, 255, 255, 0.55);
-    line-height: 1.35;
-}
-
-.role-card-check {
-    margin-top: 8px;
-    font-size: 0.68rem;
-    font-weight: 700;
-    color: #4dd0e1;
-}
-
-.role-card-check-empty {
-    color: rgba(255, 255, 255, 0.35);
-    font-weight: 500;
 }
 
 /* --- Метрики --- */
@@ -204,6 +116,27 @@
     border-color: rgba(0, 188, 212, 0.5);
 }
 
+.home-learning-entry {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 1px;
+    border-color: rgba(126, 232, 255, 0.3);
+    background: rgba(0, 188, 212, 0.15);
+}
+
+.home-learning-entry-title {
+    font-weight: 700;
+}
+
+.home-learning-entry small {
+    display: block;
+    opacity: 0.7;
+    font-size: 0.72rem;
+    margin-top: 0;
+}
+
 /* --- Поиск и сортировка --- */
 .home-controls {
     display: flex;
@@ -251,7 +184,7 @@
 /* --- Сетка функций --- */
 .features-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 12px;
 }
 
@@ -288,12 +221,22 @@
 }
 
 .feature-fav-btn {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    margin: -6px -6px 0 0;
+    border-radius: 50%;
     background: transparent;
     border: none;
     color: rgba(255, 255, 255, 0.45);
     font-size: 1.1rem;
     cursor: pointer;
-    transition: color 0.2s ease, transform 0.2s ease;
+    transition: color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+}
+
+.feature-fav-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .feature-fav-btn:hover {
@@ -330,20 +273,66 @@
 }
 
 /* --- Адаптив --- */
-@media (max-width: 480px) {
-    .role-cards {
+@media (max-width: 600px) {
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .home-quick-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 8px;
     }
 
-    .role-card {
+    .home-quick-btn {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .home-quick-actions .home-learning-entry {
+        grid-column: 1 / -1;
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .home-greeting {
+        display: grid;
+        grid-template-columns: 48px minmax(0, 1fr);
+        grid-template-areas: "avatar text";
+        align-items: center;
+        padding: 14px;
+        gap: 10px;
+    }
+
+    .home-greeting-avatar {
+        grid-area: avatar;
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+        font-size: 1.6rem;
+    }
+
+    .home-greeting-text {
+        grid-area: text;
+    }
+
+    .home-greeting-name {
+        font-size: 1.1rem;
+    }
+
+    .home-dashboard-strip {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .home-metric-card {
         padding: 12px 8px;
     }
 
-    .role-card-desc {
-        font-size: 0.64rem;
-    }
-
-    .features-grid {
-        grid-template-columns: 1fr;
+    .home-metric-card strong {
+        font-size: 0.98rem;
     }
 }

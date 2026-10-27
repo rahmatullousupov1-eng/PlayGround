@@ -16,7 +16,7 @@ const profileSubmodule = {
         
         let html = `
             <div class="profile-container">
-                <button class="btn-back" onclick="settingsModule.show()">← Назад к настройкам</button>
+                <button class="btn-back" onclick="navigationManager.goTo('profile')">← Назад к профилю</button>
                 
                 <div class="profile-header">
                     <div class="avatar-display">${user.avatar}</div>

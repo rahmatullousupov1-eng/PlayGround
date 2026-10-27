@@ -38,7 +38,6 @@
     
     <!-- Стили дашборда -->
     <link rel="stylesheet" href="modules/dashboard/dashboard.css">
-    <link rel="stylesheet" href="modules/info/info.css">
     <link rel="stylesheet" href="modules/profile/profile.css">
     <link rel="stylesheet" href="modules/feed/feed.css">
     <link rel="stylesheet" href="modules/medical/medical.css">
@@ -135,7 +134,7 @@
     <div class="header">
         <h1 class="app-title">Invictus</h1>
         <div id="score-display" style="display: none;"></div>
-        <button class="profile-btn" onclick="profileManager.toggle()">👤</button>
+        <button class="profile-btn" onclick="navigationManager.goTo('profile')" aria-label="Открыть профиль">👤</button>
     </div>
 
     <!-- Контейнер для экранов модулей -->
@@ -148,10 +147,7 @@
                     <div class="home-greeting-hello">Добро пожаловать</div>
                     <div class="home-greeting-name" id="home-greet-name">Пользователь</div>
                 </div>
-                <button class="home-role-chip" id="home-role-chip" onclick="navigationManager.goTo('info')">🎓 Студент ▾</button>
             </div>
-
-            <div class="role-portal" id="home-role-portal"></div>
 
             <div class="home-dashboard-strip" id="home-metrics"></div>
 
@@ -165,12 +161,7 @@
             <div class="features-grid" id="features-grid"></div>
         </section>
 
-        <!-- Информация Module (Telegram-style: выбор роли → подразделы) -->
-        <section id="info-screen" class="module-screen">
-            <div id="info-content"></div>
-        </section>
-
-        <!-- Профиль Module (отдельная вкладка) -->
+        <!-- Профиль Module: аккаунт и настройки -->
         <section id="profile-screen" class="module-screen">
             <div id="profile-content"></div>
         </section>
@@ -404,17 +395,6 @@
             </div>
         </div>
 
-        <div id="profile-overlay" class="drawer-overlay" onclick="profileManager.closeDrawer()"></div>
-
-        <aside id="profile-drawer" class="profile-drawer" aria-hidden="true">
-            <div class="drawer-header">
-                <div class="drawer-title">Профиль</div>
-                <button class="close-drawer-btn" onclick="profileManager.closeDrawer()">×</button>
-            </div>
-            <div id="drawer-user-info" class="drawer-user-info"></div>
-            <div id="drawer-menu"></div>
-        </aside>
-
     <!-- Нижняя навигация -->
     <nav class="bottom-nav">
         <button class="bottom-nav-btn active" onclick="navigationManager.goTo('home')" data-screen="home">
@@ -423,11 +403,11 @@
         </button>
         <button class="bottom-nav-btn" onclick="navigationManager.goTo('feed')" data-screen="feed">
             <span class="nav-icon">📰</span>
-            <span class="nav-label">Лента</span>
+            <span class="nav-label">Новости</span>
         </button>
         <button class="bottom-nav-btn" onclick="navigationManager.goTo('medical')" data-screen="medical">
             <span class="nav-icon">🩺</span>
-            <span class="nav-label">Медицина</span>
+            <span class="nav-label">Практика</span>
         </button>
         <button class="bottom-nav-btn" onclick="navigationManager.goTo('search')" data-screen="search">
             <span class="nav-icon">🔍</span>
@@ -443,7 +423,6 @@
     <script src="lib/safe.js"></script>
     <script src="modules/navbar/navbar.js"></script>
     <script src="modules/home/home.js"></script>
-    <script src="modules/info/info.js"></script>
     <script src="modules/profile/profile.js"></script>
     
     <!-- Subjects module -->

@@ -26,9 +26,6 @@ const navigationManager = {
             case 'home':
                 homeModule.show();
                 break;
-            case 'info':
-                if (typeof infoModule !== 'undefined') infoModule.show();
-                break;
             case 'profile':
                 if (typeof profileModule !== 'undefined') profileModule.show();
                 break;
@@ -166,7 +163,6 @@ const navigationManager = {
         if (customScreen) customScreen.style.display = 'none';
 
         homeModule.hide();
-        if (typeof infoModule !== 'undefined') infoModule.hide();
         if (typeof profileModule !== 'undefined') profileModule.hide();
         if (typeof notesModule !== 'undefined') notesModule.hide();
         subjectsModule.hide();
@@ -236,75 +232,16 @@ const navigationManager = {
     }
 };
 
-// Profile Manager
+// Profile Manager: закрывает модальные окна, открытие профиля идёт через навигацию.
 const profileManager = {
-    // Инициализация (если нужна)
     init: function(appData) {
         this.appData = appData;
     },
 
-    // Метод, который вызывается при клике на иконку в шапке — переключает состояние
-    toggle: function() {
-        const drawer = document.getElementById('profile-drawer');
-        if (drawer && drawer.classList.contains('open')) {
-            this.closeDrawer();
-        } else {
-            this.openDrawer();
-        }
-    },
-
-    // Открыть шторку
-    openDrawer: function() {
-        const drawer = document.getElementById('profile-drawer');
-        const overlay = document.getElementById('profile-overlay');
-        const userInfoContainer = document.getElementById('drawer-user-info');
-        
-        // Заполняем данными перед открытием
-        if (this.appData && this.appData.user) {
-            const u = this.appData.user;
-            const roleLabel = typeof getRoleLabel === 'function'
-                ? getRoleLabel(u)
-                : (u.role === 'teacher' ? 'Преподаватель' : 'Студент');
-            userInfoContainer.innerHTML = `
-                <div class="drawer-avatar">${u.avatar || '👤'}</div>
-                <span class="drawer-username">${Safe.esc(u.fullname || 'Студент')}</span>
-                <span class="drawer-role">${roleLabel}</span>
-            `;
-        }
-
-        const menu = document.getElementById('drawer-menu');
-        if (menu && this.appData && this.appData.user) {
-            const isGuest = Boolean(this.appData.user.isGuest);
-            const isOwner = this.appData.user.role === 'owner';
-            const isTeacher = this.appData.user.role === 'teacher';
-            menu.innerHTML = isGuest ? `
-                <button class="drawer-item" onclick="profileManager.close(); navigationManager.goTo('settings')">🔐 Войти или зарегистрироваться</button>
-                <button class="drawer-item" onclick="profileManager.close(); navigationManager.goTo('search')">🔍 Поиск</button>
-            ` : `
-                <button class="drawer-item" onclick="profileManager.close(); navigationManager.goTo('dashboard')">📊 Личный кабинет</button>
-                <button class="drawer-item" onclick="profileManager.close(); navigationManager.goTo('search')">🔍 Поиск</button>
-                <button class="drawer-item" onclick="profileManager.close(); navigationManager.goTo('settings')">⚙️ Настройки</button>
-                <button class="drawer-item logout" onclick="profileManager.close(); performLogout()">🚪 Выйти</button>
-            `;
-        }
-
-        // Добавляем классы для анимации
-        drawer.classList.add('open');
-        overlay.classList.add('active');
-    },
-
-    // Закрыть шторку
-    closeDrawer: function() {
-        document.getElementById('profile-drawer').classList.remove('open');
-        document.getElementById('profile-overlay').classList.remove('active');
-    },
-    
-    // Закрыть модальное окно (регистрация, профиль и т.д.)
     close: function() {
         const modal = document.getElementById('profile-modal');
         if (modal) {
             modal.style.display = 'none';
         }
-        this.closeDrawer();
     }
 };
